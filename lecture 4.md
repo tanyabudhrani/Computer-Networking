@@ -224,7 +224,8 @@ out: 3 smaller datagrams
 - client now knows its IP address, name and IP address of DNS server, IP address of its first-hop router
 
 > how can an ISP get a block of addresses?
-> **ICANN**: internet corporation for assigned names and numbers
-> • allocates addresses
-> • manages DNS
-> • assigns domain names, resolves disputes
+
+**ICANN**: internet corporation for assigned names and numbers
+- allocates addresses
+- manages DNS
+- assigns domain names, resolves disputes
