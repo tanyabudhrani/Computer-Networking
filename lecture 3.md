@@ -1,7 +1,5 @@
 # lecture 3
 
-Created: January 23, 2024 4:22 PM
-
 # transport layer
 
 - provide logical **end-to-end connection** between app processes running on different hosts
@@ -45,16 +43,10 @@ Created: January 23, 2024 4:22 PM
 
 - **demultiplexing at receiver**: delivering received segments at the receiver side to correct app layer processes
 
-![Screenshot 2024-01-23 at 9.13.36 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_9.13.36_PM.png)
-
-![Screenshot 2024-01-27 at 2.53.56 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-27_at_2.53.56_PM.png)
-
 ## how demultiplexing works
 
 - host receives IP datagrams — each datagram has **source IP address** and **destination IP address**, and each carries **one transport-layer segment** that has source, destination port number
 - host uses IP addresses & port numbers to direct segment to appropriate socket
-
-![Screenshot 2024-01-23 at 9.15.11 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_9.15.11_PM.png)
 
 ## connectionless demultiplexing
 
@@ -62,8 +54,6 @@ Created: January 23, 2024 4:22 PM
     - checks destination port numbers
     - directs UDP segment to socket with that port numbers
 - IP datagrams with **same destination port number**, but different source IP addresses and/or source port numbers will be directed to same socket at destination
-
-![Screenshot 2024-01-23 at 9.17.26 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_9.17.26_PM.png)
 
 ## connection-oriented demux
 
@@ -77,8 +67,6 @@ Created: January 23, 2024 4:22 PM
 - **web servers** have different sockets for each connecting client
     - **non-persistent HTTP** will have different socket for each request
 
-![Screenshot 2024-01-23 at 9.19.40 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_9.19.40_PM.png)
-
 - three segments, all destined to server with IP address B, port 80, are demuxed to different sockets
 
 > **TCP** **is a connection-oriented protocol** that allows communication between two or more computer devices by establishing connections in the same or different networks | **UDP is a connectionless protocol** that allows communication between two or more computer devices without establishing any connection
@@ -91,8 +79,6 @@ Created: January 23, 2024 4:22 PM
     - each UDP segment is handled independently of others
 - UDP used in streaming multimedia apps (loss tolerant, rate sensitive), DNS, SNMP
 - **reliable transfer over UDP**: add reliability at application layer (application-specific error recovery)
-
-![Screenshot 2024-01-23 at 9.22.21 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_9.22.21_PM.png)
 
 ## UDP checksum
 
@@ -109,17 +95,11 @@ Created: January 23, 2024 4:22 PM
         - NO - error detected
         - YES - no error detected
 
-![Screenshot 2024-01-23 at 9.24.52 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_9.24.52_PM.png)
-
 # principles of reliable data transfer
 
 - important in application, transport, link layers
     
-    ![Screenshot 2024-01-23 at 9.26.05 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_9.26.05_PM.png)
-    
 - characteristics of unreliable channel will determine complexity of **reliable data transfer (rdt) protocol**
-
-![Screenshot 2024-01-23 at 9.26.35 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_9.26.35_PM.png)
 
 ## rdt 1.0: reliable transfer over a reliable channel
 
@@ -165,7 +145,6 @@ Created: January 23, 2024 4:22 PM
         
 
 > note: receiver can not know if its last ACK/NAK is received OK at sender
-> 
 
 ## rdt 2.2: a NAK-free protocol
 
@@ -184,18 +163,10 @@ Created: January 23, 2024 4:22 PM
 - sender retransmits if the expected ACK is not received during this time — **receiver must specify sequence numbers** of packet being ACKed
 - if packet (or ACK) is just delayed (not lost), then retransmitted packet will be duplicate → using **sequential number** already handles this
 
-![Screenshot 2024-01-23 at 9.41.11 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_9.41.11_PM.png)
-
-![Screenshot 2024-01-23 at 9.42.25 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_9.42.25_PM.png)
-
 ### stop and wait operation
-
-![Screenshot 2024-01-23 at 9.43.02 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_9.43.02_PM.png)
 
 - rdt3.0 is correct, but performance is poor
     - e.g. 1 Gbps link capacity, 15 msec prop. delay, 8Kbit length packet:
-        
-        ![Screenshot 2024-01-23 at 9.44.07 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_9.44.07_PM.png)
         
     - as RTT=30 msec, 8K bits transmitted every 30 msec → 267 kbps throughput over 1 Gbps link bandwidth
 
@@ -203,8 +174,6 @@ Created: January 23, 2024 4:22 PM
 
 - **pipelining**: sender allows multiple, “in-flight”, yet-to-be-acknowledged packets to be transmitted sequentially
     - range of sequence numbers must be increased (**[0,1] => [0,N-1]**)
-
-![Screenshot 2024-01-23 at 9.45.39 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_9.45.39_PM.png)
 
 - **go-back-N**:
     - sender can have up to N unacked packets in pipeline
@@ -224,8 +193,6 @@ Created: January 23, 2024 4:22 PM
 - k-bit sequential number in packet header
 - “window” of up to N, consecutive unacked packets allowed
 
-![Screenshot 2024-01-23 at 10.17.56 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_10.17.56_PM.png)
-
 - **cumulative ACK**: ACKs all packets up to sequence number N (including sequence number n)
     - sender may receive duplicate ACKs
 - sender sets timer for oldest in-flight packet
@@ -238,8 +205,6 @@ Created: January 23, 2024 4:22 PM
 - out-of-order packets are discarded to prevent buffer
     - send ACK for correctly-received packet **with highest in-order sequential number**
 
-![Screenshot 2024-01-23 at 10.26.17 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_10.26.17_PM.png)
-
 ## selective repeat
 
 - **receiver** individually acknowledges all correctly received packets
@@ -249,8 +214,6 @@ Created: January 23, 2024 4:22 PM
     - sender maintains timer for each unacked packet
     
 - **sender window**: N consecutive sequential numbers that includes sequence number of sent (both acked and unacked) packets and to be sent packets
-
-![Screenshot 2024-01-23 at 10.29.15 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_10.29.15_PM.png)
 
 ### sender
 
@@ -268,8 +231,6 @@ Created: January 23, 2024 4:22 PM
 - packet n is in `[rcvbase-N,rcvbase-1]`
     - send ACK(n)
 
-![Screenshot 2024-01-23 at 10.33.03 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-23_at_10.33.03_PM.png)
-
 > as go back N acknowledges the packet cumulatively, it rejects out-of-order packets | as selective repeat supports receiving out-of-order packets (it sorts the window after receiving the packets), it uses independent acknowledgements to acknowledge the packets
 > 
 
@@ -277,10 +238,6 @@ Created: January 23, 2024 4:22 PM
 
 - **example**:
     - sequence numbers: 0, 1, 2, 3 | window size = 3
-
-![Screenshot 2024-01-27 at 3.43.33 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-27_at_3.43.33_PM.png)
-
-![Screenshot 2024-01-27 at 3.43.52 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-27_at_3.43.52_PM.png)
 
 - receiver sees no difference in two scenarios — duplicate data accepted as new
 
@@ -294,16 +251,9 @@ Created: January 23, 2024 4:22 PM
 | flow control | sender will not overwhelm receiver |
 | window size | used for TCP congestion control and flow control  |
 
-![Screenshot 2024-01-24 at 9.58.39 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_9.58.39_AM.png)
-
 - **sequence number**: byte “number” of first byte in segment’s data stream
     - sequence number of next byte expected from other side forms the cumulative ACK
 
-![Screenshot 2024-01-27 at 3.50.24 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-27_at_3.50.24_PM.png)
-
-## TCP sequential numbers, ACKs
-
-![Screenshot 2024-01-24 at 9.59.35 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_9.59.35_AM.png)
 
 ## TCP round trip time, timeout
 
@@ -322,13 +272,8 @@ Created: January 23, 2024 4:22 PM
 - sampleRTT will vary, want estimated RTT “smoother”
     - average several recent measurements, not just current sampleRTT
 
-![Screenshot 2024-01-24 at 10.01.33 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_10.01.33_AM.png)
-
 - **timeout interval**: estimatedRTT plus “safety margin” wherein a large variation in estimatedRTT = larger safety margin
 - estimate sampleRTT deviation from estimatedRTT:
-    
-    ![Screenshot 2024-01-24 at 10.02.40 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_10.02.40_AM.png)
-    
 
 # TCP reliable data transfer
 
@@ -349,8 +294,6 @@ Created: January 23, 2024 4:22 PM
 - ACK received if ACK acknowledges previously unacked segments
     - update sequential number for segments known to be acked, and **start timer if there still have unacked segments**
 
-![Screenshot 2024-01-24 at 10.05.28 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_10.05.28_AM.png)
-
 ## TCP fast retransmit
 
 - the time-out period is often relatively long which causes a long delay before resending lost packet
@@ -358,17 +301,12 @@ Created: January 23, 2024 4:22 PM
 - if segment is lost, there will likely be many duplicate ACKs
 
 > **triple duplicate ACKs**: if sender receives 3 duplicate ACKs for same data, it resends unacked segment with **smallest sequential number** — since it is likely that unacked segment is lost, sender doesn’t wait for timeout
-> 
-
-![Screenshot 2024-01-24 at 10.07.26 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_10.07.26_AM.png)
 
 # TCP flow control
 
 - receiver side of TCP connection has a **receiver buffer**— receiver controls sender, so sender won’t overflow receiver buffer by transmitting too much or too fast
 - receiver “advertises” free buffer space by including rwnd value in TCP header of receiver-to-sender segments
     - receiver buffer size is set via socket options (typical default is 4096 bytes)
-    
-    ![Screenshot 2024-01-24 at 10.12.27 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_10.12.27_AM.png)
     
 - sender limits unacked (“in-flight”) data to receiver’s rwnd value, and guarantees receive buffer will not overflow
 
@@ -386,28 +324,12 @@ Created: January 23, 2024 4:22 PM
 - output link capacity: R
 - no retransmission
 
-![Screenshot 2024-01-24 at 10.13.52 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_10.13.52_AM.png)
-
 ## cause of congestion: scenario 2
 
 - one router, finite buffers
 - sender retransmission of timed-out packet
     - **application-layer input = application-layer output** (λin = λout)
     - transport-layer input includes retransmissions: **λ’in ≥ λin**
-
-![Screenshot 2024-01-24 at 10.14.56 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_10.14.56_AM.png)
-
-- sender sends only when router buffers are available
-
-![Screenshot 2024-01-24 at 10.15.22 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_10.15.22_AM.png)
-
-- packets are known to be lost, dropped at router due to full buffer — sender only resends if packet is known to be lost
-    
-    ![Screenshot 2024-01-24 at 10.16.11 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_10.16.11_AM.png)
-    
-- sender times out prematurely, sending two copies, both of which are delivered
-
-![Screenshot 2024-01-24 at 10.16.46 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_10.16.46_AM.png)
 
 - **costs of congestion**:
     - more work (retrans) for given goodput
@@ -420,8 +342,6 @@ Created: January 23, 2024 4:22 PM
 - timeout/retransmit
 - as red λ’in increases, all arriving blue packets at upper queue are dropped, blue throughput → 0
 
-![Screenshot 2024-01-24 at 10.18.25 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_10.18.25_AM.png)
-
 - **another cost of congestion**:
     - when packet was dropped, any transmission capacity used for that packet was wasted
 
@@ -430,20 +350,11 @@ Created: January 23, 2024 4:22 PM
 - **additive increase multiplicative decrease (AIMD) approach**: sender increases transmission rate (**window size**), probing for usable bandwidth, until loss occurs
     - **additive increase**: increase congestion window size (cwnd) by 1 MSS (maximum segment size) every RTT until loss detected
     - **multiplicative decrease**: cut cwnd in half after loss
-
-![Screenshot 2024-01-24 at 10.19.46 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_10.19.46_AM.png)
-
-- **sender limits transmission**:
-    
-    ![Screenshot 2024-01-27 at 4.17.46 PM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-27_at_4.17.46_PM.png)
-    
+  
 - **TCP sending rate**: roughly send cwnd bytes, wait RTT for ACKs, then send more bytes
     - **rate ~ cwnd/RTT bytes/sec**
 
-![Screenshot 2024-01-24 at 10.40.18 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_10.40.18_AM.png)
-
 > the congestion window (cwnd) is increased by one segment per RTT
-> 
 
 ## TCP slow start fast recovery
 
@@ -467,8 +378,6 @@ Created: January 23, 2024 4:22 PM
 - implementation:
     - on loss event, variable `ssthresh` is set to 1/2 of cwnd
 
-![Screenshot 2024-01-24 at 10.45.16 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_10.45.16_AM.png)
-
 ## TCP throughput
 
 - what is the average TCP throughput as function of window size, RTT?
@@ -481,14 +390,9 @@ Created: January 23, 2024 4:22 PM
 ## TCP fairness
 
 - if K TCP sessions share same bottleneck link of bandwidth R, each should have an **average rate of R/K**
-
-![Screenshot 2024-01-24 at 10.51.17 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_10.51.17_AM.png)
-
 - two competing sessions:
     - additive increase gives slope of 1, as throughout increases
     - multiplicative decrease decreases throughput proportionally
-
-![Screenshot 2024-01-24 at 10.52.00 AM.png](lecture%203%20e14899b9d1c94e4b943fdb725f571058/Screenshot_2024-01-24_at_10.52.00_AM.png)
 
 - **fairness and UPD**
     - multimedia apps often do not use TCP and do not want rate throttled by congestion control
