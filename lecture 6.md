@@ -1,23 +1,12 @@
 # lecture 6
 
-Created: April 2, 2024 6:36 PM
-
 ## elements of a wireless network
 
-![Screenshot 2024-04-02 at 6.38.23 PM.png](lecture%206%20d164e937326346f8a07a78d959915d04/Screenshot_2024-04-02_at_6.38.23_PM.png)
-
-| wireless hosts | laptop, smartphone
-run applications
-may be stationary or mobile
-- wireless does not always mean mobility |
+| Component | Description |
 | --- | --- |
-| base station | typically connected to wired network
-relay: responsible for sending packets between wired network and wireless host(s) in its “area”
-- e.g., cell towers,  802.11 access points  |
-| wireless link | typically used to connect mobile(s) to base station
-also used as backbone link 
-multiple access protocol coordinates link access 
-various data rates, transmission distance |
+| Wireless Hosts | Laptop, smartphone. Run applications. May be stationary or mobile. - Wireless does not always mean mobility. |
+| Base Station | Typically connected to wired network. Relay: responsible for sending packets between wired network and wireless host(s) in its "area". - e.g., cell towers, 802.11 access points. |
+| Wireless Link | Typically used to connect mobile(s) to base station. Also used as backbone link. Multiple access protocol coordinates link access. Various data rates, transmission distance. |
 
 # wireless network classification
 
@@ -79,8 +68,6 @@ various data rates, transmission distance |
 | multi-path propagation | radio signal reflects off objects ground, arriving at destination at slightly different times |
 - multiple wireless senders and receivers create additional problems (beyond multiple access):
 
-![Screenshot 2024-04-02 at 6.46.26 PM.png](lecture%206%20d164e937326346f8a07a78d959915d04/Screenshot_2024-04-02_at_6.46.26_PM.png)
-
 - hidden terminal problem
     - B, A hear each other
     - B, C hear each other
@@ -102,31 +89,17 @@ various data rates, transmission distance |
 
 - decoding: inner-product of encoded signal and chipping sequence
 
-### CDMA encode/decode
-
-![Screenshot 2024-04-02 at 6.51.20 PM.png](lecture%206%20d164e937326346f8a07a78d959915d04/Screenshot_2024-04-02_at_6.51.20_PM.png)
-
-### CDMA two-sender interference
-
-![Screenshot 2024-04-02 at 6.51.51 PM.png](lecture%206%20d164e937326346f8a07a78d959915d04/Screenshot_2024-04-02_at_6.51.51_PM.png)
-
 # IEEE 802.11 WLAN
 
-| 802.11a | 5-6 GHz range
-up to 54 Mbps |
+| Standard | Description |
 | --- | --- |
-| 802.11b | 2.4-5 GHz unlicensed spectrum
-up to 11 Mbps
-direct sequence spread spectrum (DSSS) in physical layer
-- all hosts use same chipping code |
-| 802.11g | 2.4-5 GHz range
-up to 54 Mbps |
-| 802.11n | multiple antennae
-2.4-5 GHz range
-up to 200 Mbps |
-- use CSMA/CA for multiple access
-- have infrastructure and ad hoc modes
+| 802.11a | 5-6 GHz range. Up to 54 Mbps. |
+| 802.11b | 2.4-5 GHz unlicensed spectrum. Up to 11 Mbps. Direct Sequence Spread Spectrum (DSSS) in physical layer. - All hosts use same chipping code. |
+| 802.11g | 2.4-5 GHz range. Up to 54 Mbps. |
+| 802.11n | Multiple antennae. 2.4-5 GHz range. Up to 200 Mbps. |
 
+- Use CSMA/CA for multiple access
+- Have infrastructure and ad hoc modes
 ## 802.11 WLAN architecture
 
 - wireless host (station) communicates with base station (access point (AP))
@@ -136,8 +109,6 @@ up to 200 Mbps |
     - AP
 
 - independent basic service set (IBSS) in ad hoc mode: stations only
-
-![Screenshot 2024-04-02 at 6.55.28 PM.png](lecture%206%20d164e937326346f8a07a78d959915d04/Screenshot_2024-04-02_at_6.55.28_PM.png)
 
 ## 802.11: channels and association
 
@@ -193,8 +164,6 @@ up to 200 Mbps |
 1. if frame received OK
     - return ACK after **SIFS** (ACK needed due to hidden terminal problem)
 
-![Screenshot 2024-04-02 at 7.06.54 PM.png](lecture%206%20d164e937326346f8a07a78d959915d04/Screenshot_2024-04-02_at_7.06.54_PM.png)
-
 ## 802.11 mac protocol: MACA
 
 - collision avoidance: avoid collisions of long data frames
@@ -209,17 +178,6 @@ up to 200 Mbps |
     - receiver transmits ACK packet to acknowledge data frame reception
 
 > avoid data frame collisions completely by using small control packets
-> 
-
-### RTS-CTS exchange
-
-![Screenshot 2024-04-02 at 7.08.32 PM.png](lecture%206%20d164e937326346f8a07a78d959915d04/Screenshot_2024-04-02_at_7.08.32_PM.png)
-
-## 802.11 frame: addressing
-
-![Screenshot 2024-04-02 at 7.09.14 PM.png](lecture%206%20d164e937326346f8a07a78d959915d04/Screenshot_2024-04-02_at_7.09.14_PM.png)
-
-![Screenshot 2024-04-02 at 7.09.49 PM.png](lecture%206%20d164e937326346f8a07a78d959915d04/Screenshot_2024-04-02_at_7.09.49_PM.png)
 
 ## 802.11: mobility within same subnet
 
@@ -227,7 +185,6 @@ up to 200 Mbps |
 - switch: which AP is associated with H1?
     - self-learning: switch will receive frame from H1 and “remember” which switch port can be used to reach H1
     
-
 ## 802.15: wireless personal area network
 
 - less than 10 m diameter
@@ -239,21 +196,14 @@ up to 200 Mbps |
 - 802.15: evolved from Bluetooth specification
 - 2.4-2.5 GHz radio band
 
-# cellular network architecture
+Certainly! Here is the content converted into a properly formatted Markdown table:
 
-| cell | covers geographical region
+# Cellular Network Architecture
 
-base station (BS) analogous to 802.11 AP
-
-mobile stations (MS) attach to network through BS
-
-air-interface: physical and link layer protocol between MS and BS |
+| component | description |
 | --- | --- |
-| MSC | connects cells to wired tel. net
-
-manages call setup
-
-handles mobility |
+| Cell | Covers geographical region. Base Station (BS) analogous to 802.11 AP. Mobile Stations (MS) attach to network through BS. Air-interface: physical and link layer protocol between MS and BS. |
+| MSC | Connects cells to wired telephone network. Manages call setup. Handles mobility. |
 
 ## first hop
 
@@ -263,17 +213,7 @@ handles mobility |
 
 - CDMA: code division multiple access
 
-## 2G voice network architecture
-
-![Screenshot 2024-04-02 at 7.15.50 PM.png](lecture%206%20d164e937326346f8a07a78d959915d04/Screenshot_2024-04-02_at_7.15.50_PM.png)
-
-## 3G voice + data network architecture
-
-![Screenshot 2024-04-02 at 7.16.36 PM.png](lecture%206%20d164e937326346f8a07a78d959915d04/Screenshot_2024-04-02_at_7.16.36_PM.png)
-
 ## 4G LTE network architecture
 
 - all IP core: IP packets tunneled (through core IP network) from base station to gateway
 - no separation between voice and data – all traffic carried over IP core to gateway
-
-![Screenshot 2024-04-02 at 7.22.06 PM.png](lecture%206%20d164e937326346f8a07a78d959915d04/Screenshot_2024-04-02_at_7.22.06_PM.png)
