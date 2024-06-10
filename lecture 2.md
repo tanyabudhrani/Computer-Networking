@@ -1,15 +1,11 @@
 # lecture 2
 
-Created: January 16, 2024 8:55 AM
-
 # creating an internet app
-
 - need to write programs that run on different hosts and communicate over a network (e.g. browser software that communicates with web server software)
 - no need to write software for network-core devices since they do not run user applications
     - writing applications on end systems allow for rapid app development
 
 ## client-server architecture
-
 - **server**:
     - always on host
     - permanent IP address
@@ -17,15 +13,9 @@ Created: January 16, 2024 8:55 AM
     - communicates with server and may be intermittently connected but do not communicate with each other
     - may have dynamic IP addresses
 
-![Screenshot 2024-01-16 at 9.06.25 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_9.06.25_AM.png)
-
 > an **IP address** is a 32-bit identifier for hosts or routers, represented in dot-decimal notation (192.0.2.1), consisting of four decimal numbers, each ranging from 0 to 255
-> 
 
 ## P2P architecture
-
-![Screenshot 2024-01-16 at 9.06.40 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_9.06.40_AM.png)
-
 - no permanent always on server
 - arbitrary end systems directly communicate
 - peers request service from other peers, and provides service in return to other peers
@@ -33,33 +23,25 @@ Created: January 16, 2024 8:55 AM
 - peers are intermittently connected and need complex management
 
 > in **client-server architecture**, clients and servers are differentiated wherein servers respond with the services requested by the client | in **p2p architecture**, clients and servers are not differentiated, and every node can both request and respond for the services
-> 
 
 ### inter-process communication
-
 - **process**: a program running in a host
     - within same host, two processes can communicate using inter-process communication
     - processes in different hosts can communicate by exchanging messages
 
 - **client process**: process that initiates communication
-
 - **server process**: process that waits to be contacted
 - applications with P2P architecture have both client processes and server processes
 
 ## sockets
-
 - processes send/receive messages to/from their sockets — essentially the **endpoint of a two way communication link**
 - socket analogous to door
     - sending process pushes message out door
     - sending process relies on transport service out of the door to deliver message to door at receiving process
 
 > sockets are generally employed in client server applications — the server creates a socket, attached it to a network port address then waits for the client to contact it; the client then creates a socket and then attempts to connect to the server socket
-> 
-
-![Screenshot 2024-01-23 at 9.25.10 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-23_at_9.25.10_AM.png)
 
 ## addressing processes
-
 - how to address a process over the internet?
     - to receive messages, processes must have an identifier
     - host device has a unique 32-bit IP address
@@ -162,11 +144,8 @@ video: 10kbps - 5mbps | yes, 100’s ms |
 - **RTT (round-trip time)**: time for a small packet to travel from client to server and back
 - **HTTP response time**: one RTT to initiate TCP connection + one RTT for HTTP request + first few bytes of HTTP response to return
     - file transmission time
-
-![Screenshot 2024-01-16 at 9.32.52 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_9.32.52_AM.png)
-
+      
 > non-persistent HTTP response time = **2RTT + file transmission time**
-> 
 
 ### non-persistent HTTP example
 
@@ -192,14 +171,7 @@ video: 10kbps - 5mbps | yes, 100’s ms |
 > the main difference between persistent and non-persistent HTTP is that, in non-persistent, there can be at most one object that can be sent over a single TCP connection, while in persistent, multiple objects can be sent since the connection is left open
 > 
 
-## HTTP request message format
-
-![Screenshot 2024-01-16 at 9.35.27 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_9.35.27_AM.png)
-
 ### example
-
-![Screenshot 2024-01-16 at 9.35.56 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_9.35.56_AM.png)
-
 - the request line contains the HTTP method and target (e.g. GET + a string that represents the object to be fetched)
 - the header lines contains information such as the required host header and the message body
 - the request ends with a blank line
@@ -229,15 +201,11 @@ video: 10kbps - 5mbps | yes, 100’s ms |
 | 505 | http version not supported | requested HTTP protocol version not supported by server |
 
 ## cookies
-
 - an HTTP cookie is a small piece of data that a server sends to a user’s web browser and is used to tell if two requests come from the same browser (remembers stateful information about the stateless HTTP protocol)
-
-![Screenshot 2024-01-16 at 9.43.17 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_9.43.17_AM.png)
 
 - **protocol endpoint entities**: maintain state at sender/receiver over multiple transactions — **cookies are http messages that carry state**
 
 ## web caching (proxy server)
-
 - web caching is the activity of storing data for reuse by caching it the first time a user visits the page, so that the next time a user request the same page, the cache will serve the copy which prevents the origin server from being overloaded
 - user sets browser (i.e. web accesses via web caching), and browser sends all HTTP requests to **proxy server**
     - if object found in proxy server, proxy server returns object, otherwise, proxy server requests object from origin server, then returns object to client
@@ -247,7 +215,6 @@ video: 10kbps - 5mbps | yes, 100’s ms |
 - typically proxy server is deployed by ISP
 
 ### caching example
-
 - one
     - assumptions:
         - average object size: 1M bits
@@ -295,7 +262,6 @@ video: 10kbps - 5mbps | yes, 100’s ms |
         - **0.6*(delay from origin servers)+0.4*(delay when satisfied at cache)** = 0.6(2.01) + 0.4(~msec) = 1.2 secs
 
 ## conditional GET
-
 - the goal is not to send object if cache has up-to-date cached version
     - if we don’t transmit the object from the server to the client, then this eliminates the delay associated with spending the object over the network
     - since the object is not transmitted from the server, the downlink is used less frequently which leads to lower down link usage
@@ -313,32 +279,13 @@ video: 10kbps - 5mbps | yes, 100’s ms |
     HTTP/1.0 304 Not modified
     ```
     
-
-![Screenshot 2024-01-16 at 10.15.31 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_10.15.31_AM.png)
-
 # electronic mail
 
- 
-
-![Screenshot 2024-01-16 at 10.18.59 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_10.18.59_AM.png)
-
-| user agent  | “mail reader”
-
-composing, editing, reading mail messages
-
-outlook, thunderbird, iphone mail client 
-
-outgoing, incoming messages stored on server |
+| component | description |
 | --- | --- |
-| mail servers | mailbox contains incoming messages for user 
-
-message queue of outgoing mail messages |
-| SMTP protocol | SMTP supports mail servers to send mail messages
-
-client: sending mail server
-
-server: receiving mail server |
-
+| user Agent | "mail reader" for composing, editing, reading mail messages. examples: Outlook, Thunderbird, iPhone mail client. Outgoing and incoming messages are stored on the server. |
+| mail servers | mailbox contains incoming messages for user-- message queue of outgoing mail messages. |
+| SMTP protocol | SMTP supports mail servers to send mail messages. **client**: sending mail server. **server**: receiving mail server |
 ## SMTP [RFC 2821]
 
 - simple mail transfer protocol — a standard protocol used for the transmission of email messages from client to server that uses **TCP, port 25**
@@ -359,8 +306,6 @@ server: receiving mail server |
 5. bob’s mail server places the message in bob’s mailbox 
 6. bob invokes his user agent to read message 
 
-![Screenshot 2024-01-16 at 10.28.44 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_10.28.44_AM.png)
-
 - SMTP uses persistent connections meaning that once a connection is established, it is kept open for the duration of the email until explicitly closed
 - messages are required to be in 7-bit ASCII
     - uses `CRLF.CRLF` to determine end of message
@@ -379,15 +324,11 @@ server: receiving mail server |
 - **SMTP**: multiple objects sent in multipart message
 
 > HTTP (port 80) is focused on the transfer of hypertext and multimedia content for web browsing and interaction, while SMTP (port 25) is dedicated to the reliable transfer of electronic mail
-> 
 
 ## mail message format
-
 - **RFC 822**: standard for text message format
     - header lines (to, from, subject)
     - body (message) uses only ascii
-
-![Screenshot 2024-01-16 at 10.35.46 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_10.35.46_AM.png)
 
 - **mail access protocol**: retrieval from server
     - **POP**: post office protocol [RFC 1939] allows client to retrieve emails from a server using authorization and/or downloading of emails
@@ -395,46 +336,37 @@ server: receiving mail server |
     - **HTTP**: involves accessing emails through a web browser (e.g. gmail, hotmail, yahoo)
 
 > RFC 822 is a specification that defines the format of email messages
-> 
 
 ## POP3 protocol
-
 - used to retrieve emails from a mail server to a client device
 
 - **authorization phase**
     - **client commands**: specifies the username and password for authentication
     - **server responses**: +OK and -ERR
     
-
 - **transaction phase**
     - **list**: lists the message numbers and sizes currently on the server
     - **retr**: retrieves a specific email message from the server based on its message
     - **dele**: marks a specific email message for deletion
     - **quit**: ends the pop3 session
 
-![Screenshot 2024-01-16 at 10.39.00 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_10.39.00_AM.png)
-
 - previous example uses POP3 “download and delete” mode which downloads and keeps copies of messages on different clients — **POP3 is stateless** across sessions
 
 ## imap
-
 - keeps all messages in one place — at server
 - allows users to organize messages in folder
 - keeps user state across sessions
     - names of folders and mappings between message IDs and folder names
 
 # DNS: domain name system
-
 - distributed database implemented in hierarchy of many name servers
 - **application-layer protocol**: hosts, name servers communicate to resolve names (address/name translation)
     - core internet function, implemented as application-layer protocol
     - complexity at network edge
 
 > essentially, a DNS is a hierarchical and decentralized naming system used to translate human-readable domain names into numerical IP addresses that are used by computers on the internet to identify each other
-> 
 
 ### services
-
 | hostname to IP address translation |
 | --- |
 | host aliasing  |
@@ -442,38 +374,29 @@ server: receiving mail server |
 | load distribution (e.g. replicated web servers where many IP addresses correspond to one name) |
 - we can’t centralize DNS because it is a single point of failure that requires a lot of maintenance, will acquire traffic volume, and doesn’t scale
 
-![Screenshot 2024-01-16 at 10.45.28 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_10.45.28_AM.png)
-
 ## root name servers
-
 - **13 logical root name servers worldwide**
     - each server is replicated many times
 - root name servers are contacted by local name servers that cannot resolve name or contact authoritative name servers if name mapping is not known
 
 ## TLD, authoritative DNS servers
-
 - **top level domain servers** are responsible for com, org, net, edu, aero, jobs, museums, and all top-level country domains
 
 > when a DNS resolver receives a query for a specific domain, the TLD server provides information about the authoritative name servers for the next level (e.g. if someone queries “www.example.com”, the TLD server for .com would be queried and respond with authoritative name servers for “example.com”
-> 
 
 - **authoritative DNS servers** are the organization’s own DNS servers that provide authoritative hostnames to IP mappings
 
 > when a TLD server directs a DNS resolver to the authoritative name servers for a second-level domain, the authoritative DNS servers for that domain provide the IP address (e.g. if the TLD server for .com directs the resolver to “example.com”, the authoritative servers for that server will find the IP address
-> 
 
 ## local DNS server
-
 - does not strictly belong to hierarchy
 - each ISP has one — also called **default name server**
 - when host makes DNS query, query is sent to its local DNS server
     - it may have local cache of recent name-to-address translation pairs (but may be out of date), if not, it acts as a proxy, forwards query into hierarchy
 
 > local DNS is a server that is typically operated by an internet service provider, and functions to resolve domain names to IP address for the devices within that network
-> 
 
 ### dns name resolution example
-
 - host at [cis.poly.edu](http://cis.poly.edu) wants IP address for [gaia.cs.umass.edu](http://gaia.cs.umass.edu)
 
 - **iterated query**: DNS server provides referrals if it doesn’t have the requested information
@@ -483,7 +406,6 @@ server: receiving mail server |
     - **resolver** relies on the DNS server to obtain information
 
 ## DNS caching, updating records
-
 - once any name server learns the mapping of a domain name to an IP address, it caches this information
     - cache entries have a **timeout** that force them to disappear after some time
     - **top-level domain** servers are often cached in local name servers
@@ -491,10 +413,8 @@ server: receiving mail server |
     - if name host changes IP address, it may not be known internet-wide until all TTLs of cached entries expire
 
 > DNS caching is a mechanism employed by DNS resolvers (local DNS servers) to store previously resolved DNS query results for a specific time period — caching helps improve the efficiency and speed of the DNS resolution process by reducing the need to repeatedly query authoritative DNS servers for the same domain name
-> 
 
 ## DNS records
-
 - **DNS**: distributed database storing resource records (RR)
     - `RR format: (name, value, type, ttl)`
 
@@ -515,9 +435,6 @@ used to create an alias for a canonical domain name  |
 
 used to specify mail servers responsible for receiving emails on behalf of the domain |
 - query and reply messages, both with same message format
-    
-    ![Screenshot 2024-01-16 at 11.13.25 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_11.13.25_AM.png)
-    
 
 - **identification**: 16 bit number for query, reply to query uses same number
 
@@ -541,7 +458,6 @@ used to specify mail servers responsible for receiving emails on behalf of the d
 - **TCP**: reliable, byte stream-oriented
 
 > TCP is a connection-based protocol while UDP is connectionless, which is why TCP is more reliable and transfers data slowly
-> 
 
 ### example
 
@@ -558,15 +474,6 @@ used to specify mail servers responsible for receiving emails on behalf of the d
 - **UDP**: transmitted data may be lost or received out-of-order
 
 > UDP provides **unreliable transfer of groups of bytes** (”datagrams”) between client and server
-> 
-
-![Screenshot 2024-01-16 at 11.17.28 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_11.17.28_AM.png)
-
-### example app
-
-![Screenshot 2024-01-16 at 11.18.02 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_11.18.02_AM.png)
-
-![Screenshot 2024-01-16 at 11.18.17 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_11.18.17_AM.png)
 
 ## socket programming with TCP
 
@@ -579,12 +486,3 @@ used to specify mail servers responsible for receiving emails on behalf of the d
     - source port numbers used to distinguish clients
 
 > TCP provides reliable, in-order, byte-stream transfer between client and server
-> 
-
-![Screenshot 2024-01-16 at 11.20.36 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_11.20.36_AM.png)
-
-### example
-
-![Screenshot 2024-01-16 at 11.21.34 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_11.21.34_AM.png)
-
-![Screenshot 2024-01-16 at 11.21.19 AM.png](lecture%202%20c0842452895c47df99bc18afaae85f36/Screenshot_2024-01-16_at_11.21.19_AM.png)
